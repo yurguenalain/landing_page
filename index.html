@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concierto Electrónico en la Playa</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: white;
+    text-align: center;
+    padding: 30px 15px;
+    overflow-x: hidden;
+  }
+  .countdown {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00f7ff;
+    margin: 30px auto 10px;
+    text-shadow: 0 0 15px #00f7ff;
+  }
+  .fondo-evento {
+    background-image: url('./2675689f-0f1d-44bf-a9ce-3e6470420fdc.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 400px;
+    position: relative;
+    border-radius: 20px;
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+  }
+  .contenido-superpuesto {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-shadow: 0 0 10px #000;
+  }
+  .animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(#00f7ff33 1px, transparent 1px);
+    background-size: 20px 20px;
+    overflow: hidden;
+  }
+  .animated-bg::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rain 10s linear infinite;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0%,
+      #00f7ff11 2%,
+      transparent 4%
+    );
+    background-size: 100% 30px;
+    opacity: 0.3;
+  }
+  @keyframes rain {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+  .page-border {
+    border: 3px solid #00f7ff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(0, 247, 255, 0.5);
+    max-width: 1000px;
+    margin: auto;
+    background-color: rgba(15, 12, 41, 0.9);
+  }
+  .video-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding-bottom: 56.25%;
+    height: 0;
+  }
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 15px;
+  }
+  .evento-info {
+    margin: 40px 0;
+    background-color: rgba(0, 247, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    animation: fadeInBounce 1s ease-out;
+  }
+  .frase-impacto {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 0 10px #00f7ff;
+    margin: 0;
+  }
+  .frase-impacto span { color: #00f7ff; }
+  .evento-fecha {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    color: #ffffff;
+    text-shadow: 0 0 8px #00f7ff;
+  }
+  .evento-fecha span { color: #00f7ff; }
+  @keyframes fadeInBounce {
+    0% { opacity: 0; transform: translateY(-20px); }
+    60% { opacity: 1; transform: translateY(10px); }
+    100% { transform: translateY(0); }
+  }
+  .button {
+    background-color: #00f7ff;
+    color: black;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 25px;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .button:hover { background-color: #00d6e2; }
+  .lineup, .info-extra, .prices, .flyer, .instagram-section {
+    margin-top: 40px;
+    font-size: 1.3rem;
+  }
+  .lineup h2, .info-extra h2, .prices h2, .flyer h2, .instagram-section h2 {
+    color: #00f7ff;
+    margin-bottom: 15px;
+  }
+  .prices { font-size: 1.5rem; }
+  .prices .big-text { font-size: 2rem; font-weight: bold; margin-bottom: 15px; }
+  .flyer img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+  }
+  .instagram-section .insta-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  @keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.03);
+  }
+  60% {
+    transform: scale(0.98);
+  }
+}
+
+.flyer img {
+  animation: heartbeat 2s infinite;
+}
+  .insta-card {
+    background-color: rgba(0, 247, 255, 0.1);
+    border-radius: 15px;
+    padding: 15px 20px;
+    width: 150px;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 10px transparent;
+  }
+  .insta-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00f7ff;
+  }
+  .insta-card img {
+    width: 40px;
+    margin-bottom: 10px;
+  }
+  .ubicacion-section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .ubicacion-section h2 {
+    font-size: 1.8rem;
+    color: #00f7ff;
+    text-shadow: 0 0 10px #00f7ff;
+    margin-bottom: 20px;
+  }
+  .map-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .titulo-brillante {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-shadow:
+      0 0 5px #ffffff,
+      0 0 10px #ffffff,
+      0 0 20px #ffffff,
+      0 0 40px #ffffff;
+    animation: pulseWhite 2s infinite ease-in-out;
+    margin-bottom: 20px;
+  }
+  @keyframes pulseWhite {
+    0% {
+      text-shadow:
+        0 0 5px #ffffff,
+        0 0 10px #ffffff,
+        0 0 20px #ffffff,
+        0 0 40px #ffffff;
+    }
+    50% {
+      text-shadow:
+        0 0 15px #eeeeee,
+        0 0 30px #cccccc,
+        0 0 50px #bbbbbb,
+        0 0 70px #999999;
+    }
+    100% {
+      text-shadow:
+        0 0 5px #ffffff,
+        0 0 10px #ffffff,
+        0 0 20px #ffffff,
+        0 0 40px #ffffff;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="countdown" id="countdown"></div>
+  <div class="fondo-evento">
+    <div class="contenido-superpuesto">
+      <div class="evento-info">
+        <p class="frase-impacto">¡Vive la <span>fiesta más intensa en este ROOFTOP</span> frente al mar!</p>
+        <p class="evento-fecha">🎉 <strong>Sábado Santo · <span>19 de abril</span></strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="animated-bg"></div>
+  <div class="page-border">
+    <h1 class="titulo-brillante">🎧 SUNSET TECHNO 🎧</h1>
+    <iframe width="315" height="560" src="https://www.youtube.com/embed/q-UB0w5uY6s" title="Nosotros @Somos.Groove 💚🪩🚀You’re first line djs! PEKKÉ, Andrick Rod, Ricloo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    
+    <div class="countdown" id="countdown"></div>
+    <a href="https://wa.me/525536535215" class="button">Aparta tu lugar</a>
+    <div class="info-extra">
+      <h2>🕺 12 Horas de Música Electrónica</h2>
+      <p>¡Prepárate para una noche épica sin parar!</p>
+      <p><strong>🕔 Empieza: 5:00 PM</strong> · <strong>Finaliza: 5:00 AM</strong></p>
+      <p>✨ <span class="highlight">Promoción especial:</span> Niñas GRATIS de <strong>9:00 PM a 10:00 PM</strong></p>
+    </div>
+    <div class="lineup">
+      <h2>🎧 LINE-UP</h2>
+      <p>SEBASTÁN GARZA <span class="highlight">(PUEBLA)</span></p>
+      <p>ANDRIK ROD <span class="highlight">(PUEBLA)</span></p>
+      <p>RODRIGO ARIZA <span class="highlight">(PUEBLA)</span></p>
+      <p>QUINNPANTHER <span class="highlight">(CDMX)</span></p>
+      <p>GUGUS <span class="highlight">(GUERRERO)</span></p>
+    </div>
+    <div class="prices">
+      <div class="big-text">🎟️ PREVENTA: $150 MXN · DÍA DEL EVENTO: $250 MXN</div>
+      <p>No pierdas la oportunidad de <strong>vibrar, latir y bailar</strong> con la esencia más pura de la <span class="highlight">música electrónica frente al mar</span>.</p>
+    </div>
+    <div class="flyer">
+      <h2>Flyer del Evento</h2>
+      <img src="./1.png" alt="Flyer del concierto">
+    </div>
+    <div class="instagram-section">
+      <h2>📲 Síguenos en Instagram</h2>
+      <div class="insta-grid">
+        <a href="https://instagram.com/dreams_esparza" target="_blank" class="insta-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+          <p>Dreams Esparza</p>
+        </a>
+        <a href="https://instagram.com/alex.trujimx" target="_blank" class="insta-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+          <p>Alex Trujillo</p>
+        </a>
+        <a href="https://instagram.com/somos.groove" target="_blank" class="insta-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+          <p>Somos</p>
+        </a>
+      </div>
+    </div>
+    <script>
+      const eventDate = new Date("2025-04-19T17:00:00").getTime();
+      const countdown = document.getElementById("countdown");
+      const x = setInterval(function () {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        countdown.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        if (distance < 0) {
+          clearInterval(x);
+          countdown.innerHTML = "¡Ya comenzó!";
+        }
+      }, 1000);
+    </script>
+  </div>
+  <div class="ubicacion-section">
+    <h2>📍 Ubicación de la fiesta más épica de Semana Santa</h2>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5896.544607786957!2d-99.87803462228997!3d16.85927530000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ca59ebc48da107%3A0x9ef2467080026211!2sDreams%20Acapulco%20ESPARZA%20(villas)!5e1!3m2!1ses-419!2smx!4v1742861711342!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</body>
+</html>
